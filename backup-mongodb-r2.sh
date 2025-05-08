@@ -6,16 +6,16 @@ if [[ -f .env ]]; then
 fi
 
 # Backup MongoDB
-docker exec -it mongodb mongodump --uri="mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:27017/phoenix?authSource=admin" --out=/tmp/mongodb-backup
+docker exec -it mongodb mongodump --uri="mongodb://${MONGO_USERNAME}:${MONGO_PA>
 
 # Copy to host
 docker cp mongodb:/tmp/mongodb-backup /home/nyka/tmp/mongodb-backup
 
 # Compress
-tar -czvf mongodb-backup.tar.gz /home/nyka/tmp/mongodb-backup
+tar -czvf /home/nyka/tmp/mongodb-backup.tar.gz /home/nyka/tmp/mongodb-backup
 
 # Upload to R2
 rclone copy /home/nyka/tmp/mongodb-backup.tar.gz r2:nykaserver/mongodb-backups/
 
 # Cleanup
-rm -rf /home/nyka/tmp/mongodb-backup mongodb-backup.tar.gz
+rm -rf /home/nyka/tmp/mongodb-backup /home/nyka/tmp/mongodb-backup.tar.gz
